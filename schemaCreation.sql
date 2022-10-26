@@ -14,10 +14,9 @@ CREATE TABLE WROTE(
 CREATE TABLE BOOK (
     ISBN char(13),
     Title varchar(30),
-    Publisher int,
+    Publisher varchar(30),
     Year int,
     Genre varchar(25),
-    FOREIGN KEY (Publisher) REFERENCES PUBLISHER(ID),
     primary key (ISBN)
 );
 
@@ -32,15 +31,8 @@ CREATE TABLE BOOK_INVENTORY (
     foreign key (ISBN) references BOOK(ISBN),
     foreign key (StoreID) references STORE(ID),
     foreign key (ShipmentNumber) references SHIPMENT(ShipmentNumber),
-    foreign key (TransactionNumber) references TRANSACTION(TransactionNumber),
+    foreign key (TransactionNumber) references TRANS(TransactionNumber),
     primary key (InventoryID)
-);
-
-CREATE TABLE PUBLISHER (
-    ID int,
-    Name varchar(25),
-    Location varchar (75),
-    PRIMARY KEY (ID)
 );
 
 CREATE TABLE EMPLOYEE (
@@ -75,10 +67,11 @@ CREATE TABLE SHIPMENT (
     TrackingNumber int,
     Supplier varchar(30),
     SentToStoreID int,
+    foreign key (SentToStoreID) references STORE(ID),
     primary key (ShipmentNumber)
 );
 
-CREATE TABLE TRANSACTION (
+CREATE TABLE TRANS (
     TransactionNumber int,
     TransactionDate date,
     TotalAmount decimal,
