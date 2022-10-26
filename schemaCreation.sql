@@ -1,10 +1,10 @@
 CREATE TABLE AUTHOR (
-    Name varchar(25),
+    Name varchar(30),
     PRIMARY KEY (Name)
 );
 
 CREATE TABLE WROTE(
-    AuthorName varchar(25),
+    AuthorName varchar(30),
     ISBN char(13),
     FOREIGN KEY (AuthorName) REFERENCES AUTHOR(Name),
     FOREIGN KEY (ISBN) REFERENCES BOOK(ISBN),
@@ -13,8 +13,8 @@ CREATE TABLE WROTE(
 
 CREATE TABLE BOOK (
     ISBN char(13),
-    Title varchar(30),
-    Publisher varchar(30),
+    Title varchar(200),
+    Publisher varchar(50),
     Year int,
     Genre varchar(25),
     primary key (ISBN)
