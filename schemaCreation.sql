@@ -26,12 +26,12 @@ CREATE TABLE BOOK_INVENTORY (
     Price decimal,
     Cost decimal,
     StoreID int,
-    ShipmentNumber int,
-    TransactionNumber int,
+    ShipmentID int,
+    TransactionNo int,
     foreign key (ISBN) references BOOK(ISBN),
-    foreign key (StoreID) references STORE(ID),
-    foreign key (ShipmentNumber) references SHIPMENT(ShipmentNumber),
-    foreign key (TransactionNumber) references TRANS(TransactionNumber),
+    foreign key (StoreID) references STORE(StoreID),
+    foreign key (ShipmentID) references SHIPMENT(ShipmentID),
+    foreign key (TransactionNo) references TRANS(TransactionNo),
     primary key (InventoryID)
 );
 
@@ -41,62 +41,61 @@ CREATE TABLE EMPLOYEE (
   Last varchar(15),
   Position varchar(15),
   Salary int,
-  Phone char(10),
-  Email varchar(30),
+  Phone char(11),
+  Email varchar(40),
   EndDate date,
-  StoreManagedID int,
-  StoreWorkedAtID int,
-  foreign key (StoreManagedID) references STORE(ID),
-  foreign key (StoreWorkedAtID) references STORE(ID),
+  Manages int,
+  WorksAt int,
+  foreign key (Manages) references STORE(StoreID),
+  foreign key (WorksAt) references STORE(StoreID),
   PRIMARY KEY (SSN)
 );
 
 CREATE TABLE CUSTOMER (
-    ID int,
+    CustomerID int,
     First varchar(15),
     Last varchar(15),
     Email varchar(30),
-    Phone char(10),
-    PRIMARY KEY (ID)
+    Phone char(11),
+    PRIMARY KEY (CustomerID)
 );
 
 CREATE TABLE SHIPMENT (
-    ShipmentNumber int,
+    ShipmentID int,
     ArrivalDate date,
     OrderDate date,
-    TrackingNumber int,
+    TrackingNo int,
     Supplier varchar(30),
-    SentToStoreID int,
-    foreign key (SentToStoreID) references STORE(ID),
-    primary key (ShipmentNumber)
+    SentTo int,
+    foreign key (SentTo) references STORE(StoreID),
+    primary key (ShipmentID)
 );
 
 CREATE TABLE TRANS (
-    TransactionNumber int,
-    TransactionDate date,
-    TotalAmount decimal,
+    TransactionNo int,
+    Date date,
     StoreID int,
     CustomerID int,
     EmployeeSSN char(9),
-    foreign key (CustomerID) references CUSTOMER(ID),
+    foreign key (CustomerID) references CUSTOMER(CustomerID),
     foreign key (EmployeeSSN) references EMPLOYEE(SSN),
-    primary key (TransactionNumber)
+    primary key (TransactionNo)
 );
 
 CREATE TABLE STORE (
-    ID int,
+    StoreID int,
     BackupLocation int,
     Location varchar(60),
     InOperation int,
-    foreign key (ID) references STORE(ID),
-    primary key (ID)
+    foreign key (BackupLocation) references STORE(StoreID),
+    primary key (StoreID)
 );
 
 CREATE TABLE COMPETITOR (
-    Address varchar(60),
+    Location varchar(90),
     Company varchar(30),
     NearestID int,
-    FOREIGN KEY (NearestID) REFERENCES STORE(ID),
+    FOREIGN KEY (NearestID) REFERENCES STORE(StoreID),
     PRIMARY KEY (Company)
 );
 
@@ -108,7 +107,7 @@ CREATE TABLE NEWS_OUTLET (
 CREATE TABLE ARTICLE (
     Name varchar(30),
     Date date,
-    Company varchar(30),
-    BookReferenced char(13),
+    Company varchar(50),
+    BookReferenced char(10),
     primary key (Name)
 );
