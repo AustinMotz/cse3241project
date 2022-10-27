@@ -64,7 +64,7 @@ CREATE TABLE SHIPMENT (
     ShipmentID int,
     ArrivalDate date,
     OrderDate date,
-    TrackingNo int,
+    TrackingNo char(13),
     Supplier varchar(30),
     SentTo int,
     foreign key (SentTo) references STORE(StoreID),
@@ -96,7 +96,7 @@ CREATE TABLE COMPETITOR (
     Company varchar(30),
     NearestID int,
     FOREIGN KEY (NearestID) REFERENCES STORE(StoreID),
-    PRIMARY KEY (Company)
+    PRIMARY KEY (Location)
 );
 
 CREATE TABLE NEWS_OUTLET (
